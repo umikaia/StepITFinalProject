@@ -1,0 +1,6 @@
+@StepITFinalProject_HostAddress = http://localhost:5290
+
+GET {{StepITFinalProject_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
