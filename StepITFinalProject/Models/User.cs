@@ -13,7 +13,6 @@ public class User
     public DateTime CreatedAt { get; set; }
 
     public LibraryCard LibraryCard { get; set; }
-    public BorrowRecord BorrowRecord { get; set; }
-
+    public List<BorrowRecord> BorrowRecords { get; set; } = new List<BorrowRecord>();
 
 }

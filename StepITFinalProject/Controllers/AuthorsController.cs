@@ -18,7 +18,7 @@ public class AuthorsController : ControllerBase
         _authorService = authorService;
     }
 
-    [AuthorizedRoles(ROLES.READER, ROLES.LIBRARIAN)]
+//    [AuthorizedRoles(ROLES.READER, ROLES.LIBRARIAN)]
     [HttpGet]
     public ActionResult<ApiResponse<List<GetAuthorResponse>>> GetAllAuthors()
     {
@@ -26,7 +26,7 @@ public class AuthorsController : ControllerBase
         return StatusCode(response.StatusCode, response);
     }
 
-    [AuthorizedRoles(ROLES.READER, ROLES.LIBRARIAN)]
+  //  [AuthorizedRoles(ROLES.READER, ROLES.LIBRARIAN)]
     [HttpGet("/{id}")]
     public ActionResult<ApiResponse<GetAuthorDetailsResponse>> GetAuthorByIdWithBooks(int id)
     {
@@ -34,7 +34,7 @@ public class AuthorsController : ControllerBase
         return StatusCode(response.StatusCode, response);
     }
 
-    [AuthorizedRoles(ROLES.LIBRARIAN)]
+    // [AuthorizedRoles(ROLES.LIBRARIAN)]
     [HttpPost]
     public ActionResult<ApiResponse<CreateAuthorResponse>> CreateAuthor(CreateAuthorRequest request)
     {
@@ -42,7 +42,7 @@ public class AuthorsController : ControllerBase
         return StatusCode(response.StatusCode, response);
     }
 
-    [AuthorizedRoles(ROLES.LIBRARIAN)]
+    //[AuthorizedRoles(ROLES.LIBRARIAN)]
     [HttpPut("/{id}")]
     public ActionResult<ApiResponse<GetAuthorResponse>> UpdateAuthor(int id, UpdateAuthorRequest request)
     {
@@ -50,7 +50,7 @@ public class AuthorsController : ControllerBase
         return StatusCode(response.StatusCode, response);
     }
 
-    [AuthorizedRoles(ROLES.LIBRARIAN)]
+    // [AuthorizedRoles(ROLES.LIBRARIAN)]
     [HttpDelete("/{id}")]
     public ActionResult<ApiResponse<GetAuthorResponse>> DeleteAuthor(int id)
     {

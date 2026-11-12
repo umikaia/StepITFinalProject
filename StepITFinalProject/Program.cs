@@ -1,4 +1,6 @@
 using StepITFinalProject.Data;
+using StepITFinalProject.Services.Implementations;
+using StepITFinalProject.Services.Interfaces;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -8,6 +10,12 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<Baza>();
+builder.Services.AddScoped<IAuthorService, AuthorService>();
+
+builder.Services.AddAutoMapper(
+    cfg => { },
+    typeof(Program)
+);
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

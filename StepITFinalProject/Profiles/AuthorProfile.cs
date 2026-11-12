@@ -13,12 +13,18 @@ public class AuthorProfile : Profile
     {
 
         CreateMap<Author, GetAuthorResponse>();
-        CreateMap<Author, GetAuthorDetailsResponse>();
         CreateMap<Author, CreateAuthorResponse>();
+        CreateMap<Author, GetAuthorDetailsResponse>();
 
-        CreateMap<Book, AuthorBooks>();
+        CreateMap<Book, AuthorBooks>()
+            .ForMember(d => d.Title, o => o.MapFrom(s => s.Title));
 
+        CreateMap<CreateAuthorRequest, Author>()
+            .ForMember(d => d.Id, o => o.Ignore())
+            .ForMember(d => d.Books, o => o.Ignore());
 
-        CreateMap<UpdateAuthorRequest, Author>();
+        CreateMap<UpdateAuthorRequest, Author>()
+            .ForMember(d => d.Id, o => o.Ignore())
+            .ForMember(d => d.Books, o => o.Ignore());
     }
 }

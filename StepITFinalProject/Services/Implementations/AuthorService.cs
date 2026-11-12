@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using StepITFinalProject.Data;
 using StepITFinalProject.Common;
-using StepITFinalProject.Data;
 using StepITFinalProject.Services.Interfaces;
 using StepITFinalProject.Models;
 using StepITFinalProject.Requests;

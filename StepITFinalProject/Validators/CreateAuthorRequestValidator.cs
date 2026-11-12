@@ -16,8 +16,8 @@ public class CreateAuthorRequestValidator : AbstractValidator<CreateAuthorReques
             .Length(1, 60).WithMessage("Last name must be between 1 and 60 characters.");
 
         RuleFor(x => x.BirthYear)
-            .InclusiveBetween(-2500, DateTime.UtcNow.Year)
-            .WithMessage($"Birth year must be between -2500 and {DateTime.UtcNow.Year}.");
+            .InclusiveBetween(-1000, DateTime.UtcNow.Year)
+            .WithMessage($"Birth year must be between -1000 and {DateTime.UtcNow.Year}.");
 
         RuleFor(x => x.Country)
             .NotEmpty().WithMessage("Country is required.")
