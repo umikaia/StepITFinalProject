@@ -11,6 +11,6 @@ public class LibraryCardProfile : Profile
     public LibraryCardProfile()
     {
         CreateMap<LibraryCard, GetLibraryCardResponse>()
-            .ForMember(d => d.IsActive, o => o.MapFrom(s => s.ExpiresAt > DateTime.UtcNow));
+            .ForMember(d => d.IsActive, o => o.MapFrom(s => s.ExpirationDate > DateTime.UtcNow));
     }
 }
