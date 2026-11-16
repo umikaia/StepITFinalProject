@@ -51,7 +51,7 @@ public class AuthorsController : ControllerBase
     }
 
     // [AuthorizedRoles(ROLES.LIBRARIAN)]
-    [HttpDelete("/{id}")]
+    [HttpDelete("delete")]
     public ActionResult<ApiResponse<GetAuthorResponse>> DeleteAuthor(int id)
     {
         var response = _authorService.DeleteAuthor(id);

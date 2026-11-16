@@ -1,6 +1,4 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
-using StepITFinalProject.Data;
 using StepITFinalProject.Requests;
 using StepITFinalProject.Models;
 using StepITFinalProject.Responses;
