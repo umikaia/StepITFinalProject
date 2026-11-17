@@ -1,6 +1,9 @@
-﻿namespace StepITFinalProject.Services.Interfaces;
+﻿using StepITFinalProject.Common;
+using StepITFinalProject.Responses;
+namespace StepITFinalProject.Services.Interfaces;
 
-public interface ILibraryCardServce
+public interface ILibraryCardService
 {
-
+    ApiResponse<GetLibraryCardResponse> CreateMyCard(int userId);
+    ApiResponse<GetLibraryCardResponse> GetMyCard(int userId);
 }

@@ -64,12 +64,11 @@ public class BookService : IBookService
         if (book == null)
         {
             return ApiResponse<GetBookDetailsResponse>.Fail(404, "Book not found");
-
         }
 
         return ApiResponse<GetBookDetailsResponse>.OK(_mapper.Map<GetBookDetailsResponse>(book));
-
     }
+
 
     public ApiResponse<CreateBookResponse> CreateBook(CreateBookRequest request)
     {
@@ -112,45 +111,50 @@ public class BookService : IBookService
             .Include(b => b.Genres)
             .FirstOrDefault(b => b.Id == id);
 
-        if(book == null)
+        if (book == null)
         {
             return ApiResponse<GetBookDetailsResponse>.Fail(404, "Book not found");
         }
 
         bool authorExists = _baza.Authors.Any(a => a.Id == request.AuthorId);
-
         if (!authorExists)
         {
-            return ApiResponse<GetBookDetailsResponse>.Fail(400, "Authord does not exist");
+            return ApiResponse<GetBookDetailsResponse>.Fail(400, "Author does not exist");
         }
 
         bool isbnTaken = _baza.Books.Any(b => b.Id != id && b.ISBN == request.ISBN);
-
         if (isbnTaken)
         {
             return ApiResponse<GetBookDetailsResponse>.Fail(409, "A book with this ISBN already exists");
         }
 
-        // aq dasamatebeli maqvs kidev borrowrecordebze
-        //
-        //
+        int activeLoans = _baza.BorrowRecords.Count(r => r.BookId == id && r.ReturnedAt == null);
+        if (request.TotalCopies < activeLoans)
+        {
+            return ApiResponse<GetBookDetailsResponse>.Fail(400,
+                $"Total copies cannot be less than the {activeLoans} copies currently borrowed");
+        }
 
         var genres = _baza.Genres.Where(g => request.GenreIds.Contains(g.Id)).ToList();
-
-        if(genres.Count != request.GenreIds.Count)
+        if (genres.Count != request.GenreIds.Count)
         {
             return ApiResponse<GetBookDetailsResponse>.Fail(400, "One or more genres do not exist");
         }
 
-        _mapper.Map(request, book);
+        _mapper.Map(request, book);                              
 
-        book.Genres.Clear();
+        book.Genres.Clear();                                     
         book.Genres.AddRange(genres);
 
         _baza.SaveChanges();
 
-        return ApiResponse<GetBookDetailsResponse>.OK(_mapper.Map<GetBookDetailsResponse>(book), "Book updatet successfully");
+        
+        var updated = _baza.Books
+            .Include(b => b.Author)
+            .Include(b => b.Genres)
+            .First(b => b.Id == id);
 
+        return ApiResponse<GetBookDetailsResponse>.OK(_mapper.Map<GetBookDetailsResponse>(updated), "Book updated successfully");
     }
 
     public ApiResponse<bool> DeleteBook(int id)
@@ -175,6 +179,5 @@ public class BookService : IBookService
 
         return ApiResponse<bool>.OK(true, "Book deleted successfully", 204);
     }
-
 
 }

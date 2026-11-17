@@ -4,6 +4,12 @@ namespace StepITFinalProject.Data;
 
 public class Baza : DbContext
 {
+
+    public Baza(DbContextOptions<Baza> options)
+    : base(options)
+    {
+    }
+
     public DbSet<Book> Books { get; set; }
     public DbSet<Author> Authors { get; set; }
     public DbSet<Genre> Genres { get; set; }
@@ -11,12 +17,5 @@ public class Baza : DbContext
     public DbSet<LibraryCard> LibraryCards { get; set; }
     public DbSet<User> Users { get; set; }
 
-    protected override void OnConfiguring(
-    DbContextOptionsBuilder optionsBuilder)
-    {
-        optionsBuilder.UseSqlServer(
-            "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=LibraryDatabase;Integrated Security=True;TrustServerCertificate=True;"
-        );
-    }
 
 }

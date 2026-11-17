@@ -279,8 +279,7 @@ namespace StepITFinalProject.Migrations
                 {
                     b.Navigation("BorrowRecords");
 
-                    b.Navigation("LibraryCard")
-                        .IsRequired();
+                    b.Navigation("LibraryCard");
                 });
 #pragma warning restore 612, 618
         }

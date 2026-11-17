@@ -1,8 +1,6 @@
 ﻿using AutoMapper;
 using StepITFinalProject.Models;
 using StepITFinalProject.Responses;
-using StepITFinalProject.Requests;
-
 
 namespace StepITFinalProject.Profiles;
 
