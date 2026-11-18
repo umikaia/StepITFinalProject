@@ -18,7 +18,7 @@ public class GenresController : ControllerBase
         _genreService = genreService;
     }
 
-    /// [AuthorizedRoles(ROLES.READER, ROLES.LIBRARIAN)]
+    [AuthorizedRoles(ROLES.READER, ROLES.LIBRARIAN)]
     [HttpGet]
     public ActionResult<ApiResponse<List<GetGenreResponse>>> GetAllGenres()
     {

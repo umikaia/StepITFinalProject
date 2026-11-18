@@ -32,10 +32,10 @@ public class AuthorService : IAuthorService
     {
         var author = _baza.Authors
             .Include(a => a.Books)
-                //.ThenInclude(b => b.Genres)
+            .ThenInclude(b => b.Genres)
             .FirstOrDefault(a => a.Id == id);
 
-        if(author == null)
+        if (author == null)
         {
             return ApiResponse<GetAuthorDetailsResponse>.Fail(404, "Author not found");
         }

@@ -84,7 +84,7 @@ public class BookService : IBookService
 
         if (isbnTaken)
         {
-            return ApiResponse<CreateBookResponse>.Fail(409, "A book with this ISBN does not exist");
+            return ApiResponse<CreateBookResponse>.Fail(409, "A book with this ISBN already exists");
         }
 
         var genres = _baza.Genres.Where(g => request.GenreIds.Contains(g.Id)).ToList();
@@ -140,6 +140,11 @@ public class BookService : IBookService
         {
             return ApiResponse<GetBookDetailsResponse>.Fail(400, "One or more genres do not exist");
         }
+
+        int difference = request.TotalCopies - book.TotalCopies;
+
+        book.TotalCopies = request.TotalCopies;
+        book.AvailableCopies += difference;
 
         _mapper.Map(request, book);                              
 

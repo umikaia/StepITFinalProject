@@ -29,26 +29,26 @@ public class BorrowsController : ControllerBase
     }
 
     [HttpPost("{id:int}/return")]
-   // [AuthorizedRoles(ROLES.READER)]
+    [AuthorizedRoles(ROLES.READER)]
     public ActionResult<ApiResponse<GetBorrowResponse>> ReturnBook(int id)
     {
         var response = _borrowService.ReturnBook(User.GetUserId(), id);
         return StatusCode(response.StatusCode, response);
     }
 
+    [AuthorizedRoles(ROLES.READER)]
     [HttpGet("me")]
-    //[AuthorizedRoles(ROLES.READER)]
     public ActionResult<ApiResponse<List<GetBorrowResponse>>> GetMyBorrows([FromQuery] bool activeOnly = false)
     {
         var response = _borrowService.GetMyBorrows(User.GetUserId(), activeOnly);
         return StatusCode(response.StatusCode, response);
     }
 
+    [AuthorizedRoles(ROLES.LIBRARIAN)]
     [HttpGet]
-    //[AuthorizedRoles(ROLES.LIBRARIAN)]
-    public ActionResult<ApiResponse<List<GetBorrowResponse>>> GetAllBorrows([FromQuery] bool overdueOnly = false, [FromQuery] int? userId = null)
+    public ActionResult<ApiResponse<List<GetBorrowResponse>>> GetAllBorrows([FromQuery] bool overdueOnly = false, [FromQuery] int? userId = null, [FromQuery] bool active = false)
     {
-        var response = _borrowService.GetAllBorrows(overdueOnly, userId);
+        var response = _borrowService.GetAllBorrows(overdueOnly, userId, active);
         return StatusCode(response.StatusCode, response);
     }
 }

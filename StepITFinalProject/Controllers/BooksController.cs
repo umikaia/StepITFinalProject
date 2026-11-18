@@ -5,6 +5,8 @@ using StepITFinalProject.Common;
 using StepITFinalProject.Requests;
 using StepITFinalProject.Responses;
 using StepITFinalProject.Services.Interfaces;
+using StepITFinalProject.Enums;
+using StepITFinalProject.Attributes;
 
 namespace StepITFinalProject.Controllers;
 
@@ -18,7 +20,7 @@ public class BooksController : ControllerBase
         _bookService = bookService;
     }
 
-    //    [AuthorizedRoles(ROLES.READER, ROLES.LIBRARIAN)]
+    [AuthorizedRoles(ROLES.READER, ROLES.LIBRARIAN)]
     [HttpGet]
     public ActionResult<ApiResponse<List<GetBookResponse>>> GetAllBooks([FromQuery] string? search, [FromQuery] int? authorId, [FromQuery] int? genreId, [FromQuery] bool availableOnly = false)
     {
@@ -27,7 +29,7 @@ public class BooksController : ControllerBase
     }
 
 
-    //  [AuthorizedRoles(ROLES.READER, ROLES.LIBRARIAN)]
+    [AuthorizedRoles(ROLES.READER, ROLES.LIBRARIAN)]
     [HttpGet("{id:int}")]
 
     public ActionResult<ApiResponse<GetBookDetailsResponse>> GetBookById(int id)
@@ -36,15 +38,16 @@ public class BooksController : ControllerBase
         return StatusCode(response.StatusCode, response);
     }
 
+ 
+    [AuthorizedRoles(ROLES.LIBRARIAN)]
     [HttpPost]
-    //    [AuthorizedRoles(ROLES.LIBRARIAN)]
     public ActionResult<ApiResponse<CreateBookResponse>> CreateBook(CreateBookRequest request)
     {
         var response = _bookService.CreateBook(request);
         return StatusCode(response.StatusCode, response);
     }
 
-    //    [AuthorizedRoles(ROLES.LIBRARIAN)]
+    [AuthorizedRoles(ROLES.LIBRARIAN)]
     [HttpPut("{id:int}")]
     public ActionResult<ApiResponse<GetBookDetailsResponse>> UpdateBook(int id, UpdateBookRequest request)
     {
@@ -53,7 +56,7 @@ public class BooksController : ControllerBase
     }
 
 
-    //    [AuthorizedRoles(ROLES.LIBRARIAN)]
+    [AuthorizedRoles(ROLES.LIBRARIAN)]
     [HttpDelete("{id:int}")]
     public ActionResult<ApiResponse<bool>> DeleteBook(int id)
     {

@@ -18,9 +18,14 @@ public class BookProfile : Profile
             .ForMember(d => d.IsAvailable, o => o.MapFrom(s => s.AvailableCopies > 0));
 
         CreateMap<Book, GetBookDetailsResponse>()
-            .ForMember(d => d.AuthorName, o => o.MapFrom(s => s.Author.FirstName + " " + s.Author.LastName))
-            .ForMember(d => d.Genres, o => o.MapFrom(s => s.Genres.Select(g => g.Name)))
-            .ForMember(d => d.IsAvailable, o => o.MapFrom(s => s.AvailableCopies > 0));
+            .ForMember(d => d.PublishedYear,
+                o => o.MapFrom(s => s.PublicationYear))
+            .ForMember(d => d.AuthorName,
+                o => o.MapFrom(s => s.Author.FirstName + " " + s.Author.LastName))
+            .ForMember(d => d.Genres,
+                o => o.MapFrom(s => s.Genres.Select(g => g.Name)))
+            .ForMember(d => d.IsAvailable,
+                o => o.MapFrom(s => s.AvailableCopies > 0));
 
         CreateMap<Book, CreateBookResponse>();
 
@@ -32,6 +37,8 @@ public class BookProfile : Profile
             .ForMember(d => d.BorrowRecords, o => o.Ignore());
 
         CreateMap<UpdateBookRequest, Book>()
+            .ForMember(d => d.PublicationYear,
+                o => o.MapFrom(s => s.PublishedYear))
             .ForMember(d => d.Id, o => o.Ignore())
             .ForMember(d => d.AvailableCopies, o => o.Ignore())
             .ForMember(d => d.Author, o => o.Ignore())

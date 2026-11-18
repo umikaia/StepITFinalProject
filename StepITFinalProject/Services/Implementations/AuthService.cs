@@ -2,6 +2,7 @@
 using Microsoft.IdentityModel.Tokens;
 using StepITFinalProject.Common;
 using StepITFinalProject.Data;
+using StepITFinalProject.Enums;
 using StepITFinalProject.Models;
 using StepITFinalProject.Requests;
 using StepITFinalProject.Responses;
@@ -32,7 +33,11 @@ public class AuthService : IAuthService
         var user = new User
         {
             Email = request.Email,
-            HashedPassword = BCrypt.Net.BCrypt.HashPassword(request.Password)
+            FullName = request.FullName,
+            HashedPassword = BCrypt.Net.BCrypt.HashPassword(request.Password),
+            Role = ROLES.READER,
+            CreatedAt = DateTime.UtcNow
+
         };
 
         _baza.Users.Add(user);

@@ -119,19 +119,23 @@ public class BorrowService : IBorrowService
         return ApiResponse<List<GetBorrowResponse>>.OK(_mapper.Map<List<GetBorrowResponse>>(records));
     }
 
-    public ApiResponse<List<GetBorrowResponse>> GetAllBorrows(bool overdueOnly, int? userId)
+    public ApiResponse<List<GetBorrowResponse>> GetAllBorrows(bool overdueOnly, int? userId, bool active)
     {
         var query = _baza.BorrowRecords
             .Include(r => r.Book)
             .Include(r => r.User)
             .AsQueryable();
 
-        if (userId.HasValue)
+        if(userId.HasValue)
         {
             query = query.Where(r => r.UserId == userId.Value);
         }
-
-        if (overdueOnly)
+        if (active)
+        {
+            var timeNow = DateTime.UtcNow;
+            query = query.Where(r => r.ReturnedAt == null && r.DueDate > timeNow);
+        }
+        if(overdueOnly)
         {
             var currentTime = DateTime.UtcNow;  
             query = query.Where(r => r.ReturnedAt == null && r.DueDate < currentTime);
